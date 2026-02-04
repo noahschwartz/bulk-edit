@@ -386,10 +386,20 @@ export default function Builder() {
                   </div>
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <p className="text-3xl font-bold text-gray-900">
-                      {bulkChange.actions.reduce((acc, a) => {
-                        const attrs = a.employees?.[0]?.changes ? Object.keys(a.employees[0].changes) : []
-                        return acc + attrs.length
-                      }, 0)}
+                      {(() => {
+                        const allAttrs = new Set()
+                        bulkChange.actions.forEach(a => {
+                          // Check employees array for changes
+                          if (a.employees?.[0]?.changes) {
+                            Object.keys(a.employees[0].changes).forEach(attr => allAttrs.add(attr))
+                          }
+                          // Also check action-level attributes (from AddActionModal)
+                          if (a.attributes) {
+                            a.attributes.forEach(attr => allAttrs.add(attr))
+                          }
+                        })
+                        return allAttrs.size
+                      })()}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Attributes Changing</p>
                   </div>

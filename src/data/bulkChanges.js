@@ -298,11 +298,20 @@ export const createMockBulkChanges = () => {
       validation: {
         errors: 1,
         warnings: 0,
-        info: 1,
-        dependencies: 1,
+        info: 0,
+        dependencies: 2,
         items: [
           { type: 'error', code: 'circular_manager', message: 'Circular manager chain detected: Employee A → B → A', actionId: 'action-2-3' },
-          { type: 'info', code: 'cost_center_info', message: 'Cost centers will be updated to reflect new department assignments', actionId: 'action-2-1' },
+          {
+            type: 'dependency',
+            code: 'cost_center_change',
+            message: 'Cost center reassignment required',
+            description: 'Employees will be assigned to new cost centers reflecting their new department. Budget allocations must be updated accordingly.',
+            actionId: 'action-2-1',
+            count: 40,
+            affectedSystem: 'Finance',
+            requiredAction: 'Finance team must update budget allocations for new cost centers',
+          },
           {
             type: 'dependency',
             code: 'payroll_entity_change',
