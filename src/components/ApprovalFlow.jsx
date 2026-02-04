@@ -184,7 +184,10 @@ export function ApprovalTracker({ bulkChange, onSubmit, onBack }) {
                 <div className="mt-3 flex items-center gap-6 text-sm">
                   <div>
                     <span className="text-gray-500">Approver:</span>
-                    <span className="ml-2 text-gray-900">{approver.approver?.name || 'Unknown'}</span>
+                    <span className="ml-2 text-gray-900">
+                      {approver.approver?.name || 'Unknown'}
+                      {approver.approver?.title && <span className="text-gray-500 ml-1">({approver.approver.title})</span>}
+                    </span>
                   </div>
                   {approver.approver?.email && (
                     <a href={`mailto:${approver.approver.email}`} className="text-indigo-600 hover:text-indigo-800">
